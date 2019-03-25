@@ -55,7 +55,7 @@ bot.onText(/\/git (.+)/, (msg, match) => {
 
                 })
         }else {
-            bot.sendMessage(chatId, "NO");
+            bot.sendMessage(chatId, "Too many request to the API.");
             bot.sendMessage(chatId, response.statusCode);
         }
       }
