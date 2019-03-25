@@ -16,7 +16,7 @@ bot.onText(/\/movie (.+)/, (msg, match) => {
             bot.sendMessage(chatId, '_Looking for _' + movie + '...', { parse_mode: 'Markdown' })
                 .then(function (msg) {
                     var res = JSON.parse(body);
-                    bot.sendPhoto(chatId, res.Poster, {caption: 'Result: \nTitle: ' + res.Title + '\nYear: ' + res.Year + '\nRated: ' + res.Rated + '\nReleased: ' + res.Released})
+                    bot.sendPhoto(chatId, res.Poster, { caption: 'Result: \nTitle: ' + res.Title + '\nYear: ' + res.Year + '\nRated: ' + res.Rated + '\nReleased: ' + res.Released })
                     // we can get more data actually, just continue the title of the json body
                     // Send poster and the sypnosis as caption
 
@@ -36,30 +36,31 @@ bot.onText(/\/git (.+)/, (msg, match) => {
     var options = {
         url: `https://api.github.com/repos/nemtech/${project}/issues`,
         headers: {
-          'User-Agent': 'request'
+            'User-Agent': 'request'
         }
-      };
-      function callback(error, response, body) {
+    };
+    function callback(error, response, body) {
         if (!error && response.statusCode == 200) {
             bot.sendMessage(chatId, '_Looking for _' + project + '...', { parse_mode: 'Markdown' })
                 .then(function (msg) {
                     var rep = JSON.parse(body);
 
-                    for(var i = 0; i < rep.length; i ++){
+                    for (var i = 0; i < rep.length; i++) {
                         var counter = rep[i];
-                        message = 'Issue Title: ' + counter.title + '\nURL: ' + counter.url + '\nCreated by: ' + counter.user.login + '\nNo. of Comments: ' + counter.comments + '\n\n';
-                        table = table + '\n' + message;
-                        //bot.sendMessage(chatId, 'Issue Title:' + counter.title);
+                        if (!counter.html_url.includes("pull")) {
+                            message = 'Issue Title: ' + counter.title + '\nURL: ' + counter.html_url + '\nCreated by: ' + counter.user.login + '\nNo. of Comments: ' + counter.comments + '\n\n';
+                            table = table + '\n' + message;
+                        }
                     }
                     bot.sendMessage(chatId, table);
 
                 })
-        }else {
+        } else {
             bot.sendMessage(chatId, "Too many request to the API.");
             bot.sendMessage(chatId, response.statusCode);
         }
-      }
+    }
 
-      request(options, callback);
-    
+    request(options, callback);
+
 });
