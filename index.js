@@ -30,7 +30,7 @@ bot.onText(/\/movie (.+)/, (msg, match) => {
 bot.onText(/\/git (.+)/, (msg, match) => {
     const project = match[1];
     const chatId = msg.chat.id;
-    var table;
+    var table = '';
     var message;
 
     var options = {
@@ -47,7 +47,7 @@ bot.onText(/\/git (.+)/, (msg, match) => {
 
                     for(var i = 0; i < rep.length; i ++){
                         var counter = rep[i];
-                        message = 'Issue Title: ' + counter.title + '\nURL: ' + counter.url + '\nCreated by: ' + counter.user.login + '\nNo. of Comments: ' + counter.comments;
+                        message = 'Issue Title: ' + counter.title + '\nURL: ' + counter.url + '\nCreated by: ' + counter.user.login + '\nNo. of Comments: ' + counter.comments + '\n\n';
                         table = table + '\n' + message;
                         //bot.sendMessage(chatId, 'Issue Title:' + counter.title);
                     }
